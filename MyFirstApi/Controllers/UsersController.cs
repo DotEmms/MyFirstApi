@@ -12,6 +12,7 @@ namespace MyFirstApi.Controllers
     
     public class UsersController : ControllerBase
     {
+        [HttpGet]
 
     }
 }
