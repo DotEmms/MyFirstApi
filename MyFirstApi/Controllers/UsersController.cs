@@ -25,6 +25,12 @@ namespace MyFirstApi.Controllers
             return _service.GetUsers();
         }
 
+        [HttpGet("{id}")]
+        public AppUser GetUser(int id)
+        {
+            return _service.GetUser(id);
+        }
+
         [HttpPost]
         public void Add(AppUser user)
         {

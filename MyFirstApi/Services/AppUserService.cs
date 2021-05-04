@@ -25,5 +25,10 @@ namespace MyFirstApi.Services
         {
             _users.Add(user);
         }
+
+        public AppUser GetUser(int id)
+        {
+            return _users.FirstOrDefault(x => x.Id == id);
+        }
     }
 }
