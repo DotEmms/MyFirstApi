@@ -13,28 +13,29 @@ namespace MyFirstApi.Controllers
     
     public class UsersController : ControllerBase
     {
-        private AppUserService _service;
-        public UsersController()
+        private IAppUserService _service;
+        public UsersController(IAppUserService service)
         {
-            _service = new AppUserService();
+            //Dependency Injection
+            _service = service;
         }
 
         [HttpGet]
-        public IEnumerable<AppUser> Get()
+        public async Task<IEnumerable<AppUser>> GetAsync()
         {
-            return _service.GetUsers();
+            return await _service.GetUsersAsync();
         }
 
         [HttpGet("{id}")]
-        public AppUser GetUser(int id)
+        public async Task<AppUser> GetUserAsync(int id)
         {
-            return _service.GetUser(id);
+            return await _service.GetUserAsync(id);
         }
 
         [HttpPost]
-        public void Add(AppUser user)
+        public async Task AddAsync(AppUser user)
         {
-            _service.AddUser(user);
+            await _service.AddUserAsync(user);
         }
 
     }

@@ -1,34 +1,42 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyFirstApi.Services
 {
-    public class AppUserService
+    public class AppUserService : IAppUserService
     {
-        private List<AppUser> _users = new List<AppUser>
+        private MyFirstApiContext _context;
+        public AppUserService(MyFirstApiContext context)
         {
-            new AppUser{Id = 1, Name = "Michiel"},
-            new AppUser{Id = 2, Name = "Kenny"},
-            new AppUser{Id = 3, Name = "Stan"},
-            new AppUser{Id = 4, Name = "Kyle"},
-            new AppUser{Id = 5, Name = "Eric"},
-        };
+            _context = context;
+        }
+        // => not needed anymore
+        //private List<AppUser> _users = new List<AppUser>
+        //{
+        //    new AppUser{Id = 1, Name = "Michiel"},
+        //    new AppUser{Id = 2, Name = "Kenny"},
+        //    new AppUser{Id = 3, Name = "Stan"},
+        //    new AppUser{Id = 4, Name = "Kyle"},
+        //    new AppUser{Id = 5, Name = "Eric"},
+        //};
 
-        public List<AppUser> GetUsers()
+        public async Task<List<AppUser>> GetUsersAsync()
         {
-            return _users;
+            return await _context.Users.ToListAsync();
         }
 
-        public void AddUser(AppUser user)
+        public async Task AddUserAsync(AppUser user)
         {
-            _users.Add(user);
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
         }
 
-        public AppUser GetUser(int id)
+        public async Task<AppUser> GetUserAsync(int id)
         {
-            return _users.FirstOrDefault(x => x.Id == id);
+            return await _context.Users.FindAsync(id);
         }
     }
 }
