@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MyFirstApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     
     public class UsersController : ControllerBase
     {
@@ -38,5 +38,16 @@ namespace MyFirstApi.Controllers
             await _service.AddUserAsync(user);
         }
 
+        [HttpPut]
+        public async Task PutAsync(AppUser user)
+        {
+            await _service.UpdateUserAsync(user);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task DeleteAsync(int id)
+        {
+            await _service.DeleteUserAsync(id);
+        }
     }
 }
