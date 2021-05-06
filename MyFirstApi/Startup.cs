@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MyFirstApi.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,8 +36,10 @@ namespace MyFirstApi
 
             services.AddDbContext<MyFirstApiContext>(x =>
             {
-                x.UseSqlServer("");
+                x.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
             });
+            //Dependency Injection Config
+            services.AddTransient<IAppUserService, AppUserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
