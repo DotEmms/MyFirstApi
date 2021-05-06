@@ -27,6 +27,10 @@ namespace MyFirstApi.Services
         {
             return await _context.Users.ToListAsync();
         }
+        public async Task<AppUser> GetUserAsync(int id)
+        {
+            return await _context.Users.FindAsync(id);
+        }
 
         public async Task AddUserAsync(AppUser user)
         {
@@ -34,9 +38,18 @@ namespace MyFirstApi.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<AppUser> GetUserAsync(int id)
+        public async Task UpdateUserAsync(AppUser user)
         {
-            return await _context.Users.FindAsync(id);
+            _context.Update(user);
+            await _context.SaveChangesAsync();
         }
+        public async Task DeleteUserAsync(int id)
+        {
+            var user = new AppUser { Id = id };
+            _context.Attach(user);
+            _context.Remove(user);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }
